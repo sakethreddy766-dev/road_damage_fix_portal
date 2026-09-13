@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Report Road Damage - RoadFix{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <div>
+        <div class="page-label">ROADFIX REPORTING</div>
+        <h1>Report Road Damage</h1>
+        <p>Help identify road problems and make your community safer.</p>
+    </div>
+</section>
+
+<section class="report-page">
+
+    <div class="report-form-card">
+
+        <div class="form-card-header">
+            <div class="form-icon">📷</div>
+            <div>
+                <h2>Damage Information</h2>
+                <p>Provide accurate details about the damaged road.</p>
+            </div>
+        </div>
+
+        <form method="POST"
+              enctype="multipart/form-data"
+              onsubmit="return validateReportForm()">
+
+            <div class="form-group">
+                <label for="location">Road Location</label>
+
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="Example: Hanamkonda Main Road"
+                    required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="damage_type">Damage Type</label>
+
+                <select id="damage_type"
+                        name="damage_type"
+                        required>
+
+                    <option value="">Select damage type</option>
+                    <option value="Pothole">Pothole</option>
+                    <option value="Cracks">Road Cracks</option>
+                    <option value="Broken Road">Broken Road</option>
+                    <option value="Waterlogging">Waterlogging</option>
+                    <option value="Other">Other</option>
+
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="description">Description</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    placeholder="Describe the road damage..."
+                    required></textarea>
+            </div>
+
+
+            <div class="upload-area">
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <h3>Upload Road Image</h3>
+
+                <p>
+                    Add a clear photo showing the damage.
+                </p>
+
+                <label class="upload-button">
+
+                    Choose Image
+
+                    <input
+                        type="file"
+                        id="image"
+                        name="image"
+                        accept="image/png,image/jpeg,image/jpg,image/gif"
+                        onchange="previewImage(event)"
+                        required>
+
+                </label>
+
+                <small>
+                    JPG, JPEG, PNG or GIF · Maximum 5MB
+                </small>
+
+                <img
+                    id="imagePreview"
+                    alt="Image preview">
+
+            </div>
+
+
+            <button type="submit" class="submit-report-btn">
+                Submit Damage Report
+                <span>→</span>
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="report-info">
+
+        <div class="info-card">
+
+            <span class="info-number">01</span>
+
+            <h3>Take a clear photo</h3>
+
+            <p>
+                Make sure the pothole or damaged area
+                is clearly visible.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span class="info-number">02</span>
+
+            <h3>Provide the location</h3>
+
+            <p>
+                Enter a recognizable road or landmark
+                near the damaged area.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <span class="info-number">03</span>
+
+            <h3>Track your report</h3>
+
+            <p>
+                Once submitted, you can monitor the
+                repair status from your dashboard.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

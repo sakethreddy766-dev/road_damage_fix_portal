@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Register - RoadFix{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="auth-logo">
+            <span>R</span> Road<span>Fix</span>
+        </div>
+
+        <div class="auth-header">
+            <div class="page-label">JOIN ROADFIX</div>
+            <h1>Create Account</h1>
+            <p>
+                Create an account to report road damage
+                and track your reports.
+            </p>
+        </div>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required>
+            </div>
+
+            <button type="submit" class="auth-button">
+                Create Account →
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+            Already have an account?
+            <a href="{{ url_for('login') }}">Sign In</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

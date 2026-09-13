@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}RoadFix - Report Road Damage{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-container">
+
+        <div class="hero-content">
+
+            <div class="hero-label">
+                SMART ROAD REPORTING
+            </div>
+
+            <h1>
+                Better Roads<br>
+                Start With <span>Your Report.</span>
+            </h1>
+
+            <p>
+                Found a pothole, damaged road, or unsafe street?
+                Report it with a photo and help authorities
+                identify problems faster.
+            </p>
+
+            <div class="hero-buttons">
+
+                {% if session.get('user_id') %}
+
+                    <a href="{{ url_for('report_damage') }}"
+                       class="primary-button">
+                        Report Road Damage
+                        <span>→</span>
+                    </a>
+
+                    <a href="{{ url_for('dashboard') }}"
+                       class="secondary-button">
+                        View My Reports
+                    </a>
+
+                {% else %}
+
+                    <a href="{{ url_for('register') }}"
+                       class="primary-button">
+                        Report Road Damage
+                        <span>→</span>
+                    </a>
+
+                    <a href="{{ url_for('login') }}"
+                       class="secondary-button">
+                        Sign In
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+            <div class="hero-trust">
+
+                <div class="trust-item">
+                    <strong>01</strong>
+                    <span>Capture</span>
+                </div>
+
+                <div class="trust-line"></div>
+
+                <div class="trust-item">
+                    <strong>02</strong>
+                    <span>Report</span>
+                </div>
+
+                <div class="trust-line"></div>
+
+                <div class="trust-item">
+                    <strong>03</strong>
+                    <span>Track</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     INTRODUCTION
+========================= -->
+
+<section class="intro-section">
+
+    <div class="intro-container">
+
+        <div class="intro-label">
+            HOW ROADFIX WORKS
+        </div>
+
+        <h2>
+            From damaged road<br>
+            to <span>better roads.</span>
+        </h2>
+
+        <p class="intro-description">
+            RoadFix connects citizens and road management teams
+            through a simple reporting system. Submit the problem,
+            provide its location and track the repair progress.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section class="process-section">
+
+    <div class="process-container">
+
+        <div class="process-card">
+
+            <div class="process-number">
+                01
+            </div>
+
+            <div class="process-icon">
+                📷
+            </div>
+
+            <h3>
+                Capture the Damage
+            </h3>
+
+            <p>
+                Take a clear photo of the pothole,
+                damaged road or other road problem.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-number">
+                02
+            </div>
+
+            <div class="process-icon">
+                📍
+            </div>
+
+            <h3>
+                Submit the Report
+            </h3>
+
+            <p>
+                Add the road location and describe
+                the issue so it can be reviewed.
+            </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+            <div class="process-number">
+                03
+            </div>
+
+            <div class="process-icon">
+                🔧
+            </div>
+
+            <h3>
+                Track the Repair
+            </h3>
+
+            <p>
+                Follow your report as it moves from
+                pending to in progress and repaired.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta-section">
+
+    <div class="cta-content">
+
+        <div class="cta-label">
+            MAKE A DIFFERENCE
+        </div>
+
+        <h2>
+            See a problem?<br>
+            <span>Report it.</span>
+        </h2>
+
+        <p>
+            One report can help make a road safer
+            for hundreds of people.
+        </p>
+
+        {% if session.get('user_id') %}
+
+            <a href="{{ url_for('report_damage') }}"
+               class="cta-button">
+                Report Road Damage →
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('register') }}"
+               class="cta-button">
+                Get Started →
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

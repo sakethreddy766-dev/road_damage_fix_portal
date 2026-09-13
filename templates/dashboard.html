@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - RoadFix{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <div class="dashboard-top">
+
+        <div>
+            <div class="page-label">MY ROAD REPORTS</div>
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Track the road problems you have reported.
+            </p>
+        </div>
+
+        <a href="{{ url_for('report_damage') }}"
+           class="dashboard-report-btn">
+            + Report Damage
+        </a>
+
+    </div>
+
+
+    {% if reports %}
+
+        <div class="dashboard-summary">
+
+            <div class="summary-card">
+                <span>Total Reports</span>
+                <strong>{{ reports|length }}</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Submitted</span>
+                <strong>{{ reports|selectattr('status', 'equalto', 'Pending')|list|length }}</strong>
+            </div>
+
+            <div class="summary-card">
+                <span>Under Repair</span>
+                <strong>{{ reports|selectattr('status', 'equalto', 'In Progress')|list|length }}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="reports-heading">
+
+            <h2>Your Reports</h2>
+
+            <span>
+                {{ reports|length }} report{% if reports|length != 1 %}s{% endif %}
+            </span>
+
+        </div>
+
+
+        <div class="dashboard-reports">
+
+            {% for report in reports %}
+
+            <div class="dashboard-report-card">
+
+                {% if report['image'] %}
+
+                    <div class="report-image-wrapper">
+
+                        <img
+                            src="{{ url_for('static', filename='uploads/' + report['image']) }}"
+                            alt="Road damage">
+
+                        <span class="report-number">
+                            #{{ report['id'] }}
+                        </span>
+
+                    </div>
+
+                {% else %}
+
+                    <div class="no-report-image">
+                        No Image
+                    </div>
+
+                {% endif %}
+
+
+                <div class="dashboard-report-content">
+
+                    <div class="report-card-top">
+
+                        <span class="damage-type">
+                            {{ report['damage_type'] }}
+                        </span>
+
+
+                        {% if report['status'] == 'Pending' %}
+
+                            <span class="status status-pending">
+                                Pending
+                            </span>
+
+                        {% elif report['status'] == 'In Progress' %}
+
+                            <span class="status status-progress">
+                                In Progress
+                            </span>
+
+                        {% elif report['status'] == 'Repaired' %}
+
+                            <span class="status status-repaired">
+                                Repaired
+                            </span>
+
+                        {% else %}
+
+                            <span class="status">
+                                {{ report['status'] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <h3>
+                        {{ report['location'] }}
+                    </h3>
+
+
+                    <p class="report-description">
+                        {{ report['description'] }}
+                    </p>
+
+
+                    <div class="report-date">
+
+                        <span>Reported</span>
+
+                        <span>
+                            {{ report['created_at'] }}
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('report_details', report_id=report['id']) }}"
+                        class="view-report-btn">
+
+                        View Report
+
+                        <span>→</span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-dashboard">
+
+            <div class="empty-icon">
+                📍
+            </div>
+
+            <h2>No reports yet</h2>
+
+            <p>
+                You haven't reported any road damage.
+                Start by submitting your first report.
+            </p><br>
+
+            <a href="{{ url_for('report_damage') }}"
+               class="dashboard-report-btn">
+                Report Road Damage →
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

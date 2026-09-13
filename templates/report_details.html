@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="details-container">
+
+    <h1>
+        Road Damage Report #{{ report["id"] }}
+    </h1>
+
+
+    <div class="details-card">
+
+        <div class="details-image">
+
+            <img
+                src="{{ url_for('static', filename='uploads/' + report['image']) }}"
+                alt="Damaged road"
+            >
+
+        </div>
+
+
+        <div class="details-info">
+
+            <h2>
+                {{ report["damage_type"] }}
+            </h2>
+
+
+            <p>
+                <strong>Reported By:</strong>
+                {{ report["name"] }}
+            </p>
+
+
+            <p>
+                <strong>Location:</strong>
+                {{ report["location"] }}
+            </p>
+
+
+            <p>
+                <strong>Description:</strong>
+                {{ report["description"] }}
+            </p>
+
+
+            <p>
+                <strong>Date:</strong>
+                {{ report["created_at"] }}
+            </p>
+
+
+            <p>
+                <strong>Status:</strong>
+
+                <span class="status {{ report['status'].lower().replace(' ', '-') }}">
+                    {{ report["status"] }}
+                </span>
+
+            </p>
+
+
+            {% if report["admin_remark"] %}
+
+                <div class="remark">
+
+                    <strong>Admin Remark:</strong>
+
+                    <p>
+                        {{ report["admin_remark"] }}
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

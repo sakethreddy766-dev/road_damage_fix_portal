@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}RoadFix{% endblock %}</title>
+
+    <meta name="description"
+          content="RoadFix - Report damaged roads and track repairs easily.">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a href="{{ url_for('index') }}" class="brand">
+                <span class="brand-icon">R</span>
+                <span>Road<span class="brand-highlight">Fix</span></span>
+            </a>
+
+            <div class="nav-links">
+
+                <a href="{{ url_for('index') }}">
+                    Home
+                </a>
+
+                {% if session.get('user_id') %}
+
+                    <a href="{{ url_for('dashboard') }}">
+                        Dashboard
+                    </a>
+
+                    <a href="{{ url_for('report_damage') }}">
+                        Report Damage
+                    </a>
+
+                    {% if session.get('is_admin') %}
+                        <a href="{{ url_for('admin') }}">
+                            Admin
+                        </a>
+                    {% endif %}
+
+                    <a href="{{ url_for('logout') }}" class="nav-logout">
+                        Logout
+                    </a>
+
+                {% else %}
+
+                    <a href="{{ url_for('login') }}">
+                        Login
+                    </a>
+
+                    <a href="{{ url_for('register') }}" class="nav-cta">
+                        Get Started
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- FLASH MESSAGES -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            <div class="flash-container">
+
+                {% for message in messages %}
+
+                    <div class="flash-message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- PAGE CONTENT -->
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <div>
+                <div class="footer-brand">
+                    Road<span>Fix</span>
+                </div>
+
+                <p>
+                    Making roads safer through simple,
+                    transparent reporting.
+                </p>
+            </div>
+
+            <div class="footer-right">
+                <p>© 2026 RoadFix</p>
+                <p>Road Damage Reporting & Management</p>
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

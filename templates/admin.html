@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - RoadFix{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <div class="dashboard-top">
+
+        <div>
+            <div class="page-label">ROADFIX ADMIN</div>
+
+            <h1>Admin Dashboard</h1>
+
+            <p>
+                Review reports and manage road repair progress.
+            </p>
+        </div>
+
+    </div>
+
+
+    {% if reports %}
+
+    <div class="dashboard-summary">
+
+        <div class="summary-card">
+            <span>Total Reports</span>
+            <strong>{{ reports|length }}</strong>
+        </div>
+
+        <div class="summary-card">
+            <span>Pending</span>
+            <strong>
+                {{ reports|selectattr('status', 'equalto', 'Pending')|list|length }}
+            </strong>
+        </div>
+
+        <div class="summary-card">
+            <span>In Progress</span>
+            <strong>
+                {{ reports|selectattr('status', 'equalto', 'In Progress')|list|length }}
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="reports-heading">
+        <h2>Submitted Reports</h2>
+
+        <span>
+            {{ reports|length }}
+            report{% if reports|length != 1 %}s{% endif %}
+        </span>
+    </div>
+
+
+    <div class="dashboard-reports">
+
+        {% for report in reports %}
+
+        <div class="dashboard-report-card">
+
+            <!-- IMAGE -->
+
+            {% if report['image'] %}
+
+            <div class="report-image-wrapper">
+
+                <img
+                    src="{{ url_for('static', filename='uploads/' + report['image']) }}"
+                    alt="Road damage">
+
+                <span class="report-number">
+                    #{{ report['id'] }}
+                </span>
+
+            </div>
+
+            {% else %}
+
+            <div class="no-report-image">
+                No Image
+            </div>
+
+            {% endif %}
+
+
+            <div class="dashboard-report-content">
+
+                <!-- DAMAGE TYPE AND STATUS -->
+
+                <div class="report-card-top">
+
+                    <span class="damage-type">
+                        {{ report['damage_type'] }}
+                    </span>
+
+
+                    {% if report['status'] == 'Pending' %}
+
+                    <span class="status status-pending">
+                        Pending
+                    </span>
+
+                    {% elif report['status'] == 'In Progress' %}
+
+                    <span class="status status-progress">
+                        In Progress
+                    </span>
+
+                    {% elif report['status'] == 'Repaired' %}
+
+                    <span class="status status-repaired">
+                        Repaired
+                    </span>
+
+                    {% else %}
+
+                    <span class="status">
+                        {{ report['status'] }}
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <h3>
+                    {{ report['location'] }}
+                </h3>
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="report-description">
+                    {{ report['description'] }}
+                </p>
+
+
+                <!-- DATE -->
+
+                <div class="report-date">
+
+                    <span>Reported</span>
+
+                    <span>
+                        {{ report['created_at'] }}
+                    </span>
+
+                </div>
+
+
+                <!-- UPDATE FORM -->
+
+                <form
+                    method="POST"
+                    action="{{ url_for('update_report', report_id=report['id']) }}"
+                    class="admin-form">
+
+                    <label for="status-{{ report['id'] }}">
+                        Update Status
+                    </label>
+
+                    <select
+                        id="status-{{ report['id'] }}"
+                        name="status"
+                        required>
+
+                        <option value="Pending"
+                            {% if report['status'] == 'Pending' %}
+                            selected
+                            {% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="In Progress"
+                            {% if report['status'] == 'In Progress' %}
+                            selected
+                            {% endif %}>
+                            In Progress
+                        </option>
+
+                        <option value="Repaired"
+                            {% if report['status'] == 'Repaired' %}
+                            selected
+                            {% endif %}>
+                            Repaired
+                        </option>
+
+                    </select>
+
+
+                    <label for="remark-{{ report['id'] }}">
+                        Admin Remark
+                    </label>
+
+                    <textarea
+                        id="remark-{{ report['id'] }}"
+                        name="remark"
+                        rows="3"
+                        placeholder="Add a remark...">{{ report['admin_remark'] or '' }}</textarea>
+
+
+                    <button
+                        type="submit"
+                        class="admin-update-btn">
+                        Update Report
+                    </button>
+
+                </form>
+
+
+                <!-- DELETE -->
+
+                <a
+                    href="{{ url_for('delete_report', report_id=report['id']) }}"
+                    class="delete-btn"
+                    onclick="return confirm('Are you sure you want to delete this report?');">
+
+                    Delete Report
+
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-dashboard">
+
+        <div class="empty-icon">
+            📋
+        </div>
+
+        <h2>No Reports Yet</h2>
+
+        <p>
+            There are currently no road damage reports
+            submitted by users.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
