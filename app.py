@@ -851,10 +851,10 @@ def delete_report(report_id):
 # --------------------------------------------------
 # RUN APPLICATION
 # --------------------------------------------------
-
+create_tables()
 if __name__ == "__main__":
 
-    create_tables()
+    
 
     app.run(
         host="0.0.0.0",
